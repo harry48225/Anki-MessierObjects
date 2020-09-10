@@ -16,3 +16,6 @@ What is the name of the object?
 * genanki
 * BeautifulSoup4
 * requests
+
+
+Note IAU constellation images distributed under Attribution 3.0 Unported (CC BY 3.0) from https://www.iau.org/public/themes/constellations/
