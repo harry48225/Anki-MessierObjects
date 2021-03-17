@@ -113,17 +113,17 @@ messier_model = genanki.Model(
   templates=[
     {
       'name': 'Constellation',
-      'qfmt': '<div class=frontbg>What constellation is M{{mid}} in?</div>',
+      'qfmt': '<div class=frontbg>Which constellation is M{{mid}} in?</div>',
       'afmt': '{{FrontSide}}<div class=backbg><hr id="answer">{{cons}}<br>{{consimage}}<br>{{discoveredby}}</div>', # Constellation with image of constellation on back
     },
     {  
       'name': 'Type',
-      'qfmt': '<div class=frontbg>What is the type of M{{mid}}?</div>',
+      'qfmt': '<div class=frontbg>What type of deep sky object is M{{mid}}?</div>',
       'afmt': '{{FrontSide}}<div class=backbg><hr id="answer"><u>{{type}}</u><br><br>{{objectimage}}<br>{{description}}</div>',  
     },
     {  
       'name': 'Name',
-      'qfmt': '{{#name}}<div class=frontbg>What is the name of M{{mid}}?</div>{{/name}}',
+      'qfmt': '{{#name}}<div class=frontbg>What is the common name of M{{mid}}?</div>{{/name}}',
       'afmt': '{{FrontSide}}<div class=backbg><hr id="answer">{{name}}<br>{{objectimage}}</div>',  
     }
   ],
