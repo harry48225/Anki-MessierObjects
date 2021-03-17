@@ -2,7 +2,6 @@ import genanki
 from bs4 import BeautifulSoup as bs
 import requests
 import urllib
-import tidy
 import regex as re
 
 target_Uri = 'http://www.messier.seds.org/m/m{0}.html' # $ 3 digits with padding
@@ -89,9 +88,6 @@ for _ in range(1, 111):#111):
                      }
 
 
-    if name == "":
-      messier_object.pop('name', None) # Remove the name key if the object doesn't have one
-
     messier_catalog.append(messier_object)
 
 
@@ -101,9 +97,9 @@ for c in cons_media:
   media.append(c)
 
 
-my_model_name = genanki.Model(
+messier_model = genanki.Model(
   1607392319,
-  'Messier Model with name',
+  'Messier Object',
   fields=[
     {'name': 'mid'},
     {'name': 'cons'},
@@ -116,51 +112,24 @@ my_model_name = genanki.Model(
   ],
   templates=[
     {
-      'name': 'Constellation',
-      'qfmt': '<div class=frontbg>What constellation is M{{mid}} in?</div>',
-      'afmt': '{{FrontSide}}<div class=backbg><hr id="answer">{{cons}}<br>{{consimage}}<br>{{discoveredby}}</div>', # Constellation with image of constellation on back
-    },
-    {  
-      'name': 'Type',
-      'qfmt': '<div class=frontbg>What is the type of M{{mid}}?</div>',
-      'afmt': '{{FrontSide}}<div class=backbg><hr id="answer"><u>{{type}}</u><br><br>{{objectimage}}<br>{{description}}</div>',  
-    },
-    {  
       'name': 'Name',
-      'qfmt': '<div class=frontbg>What is the name of M{{mid}}?</div>',
-      'afmt': '{{FrontSide}}<div class=backbg><hr id="answer">{{name}}<br>{{objectimage}}</div>',  
-    }
-  ],
-  css='ruby rt { visibility: hidden; } ruby:hover rt { visibility: visible; } .card { font-family: Noto Sans CJK JP Regular; font-size: 25px; text-align: center; color: black; background: url("bg.jpg"); } .android .card { font-family: Noto Sans CJK JP Regular; font-size: 30px; text-align: center; color: black; background: url("bg.jpg"); } .frontbg { background-color: #313628; color: #ede7d9; border-radius: 7px; position: relative; left: 0; } .engdefbg { font-family: Raleway; font-style: italic; padding: 15px; margin-left: -5px; margin-top: -15px; color: #18adab; font-size: 15px; } .android .engdefbg { font-family: Raleway; font-style: italic; padding: 15px; margin-left: -15px; margin-top: -20px; color: #18adab; font-size: 10px; } .others { position: relative; top: 15px; border: 1px dotted #72c8e1; color: #18a111; font-size: 20x; width: auto; padding-top: 15px; padding-left: 20px; padding-bottom: 15px; padding-right: 20px; margin-bottom: 35px; } .android .others { position: relative; top: 10px; border: 1px dotted #72c111; color: #18ad34; font-size: 17px; width: auto; padding-top: 8px; padding-left: 15px; padding-bottom: 8px; padding-right: 15px; margin-bottom: 20px; } .sentence { font-size: 25px; margin-top: -20px; margin-bottom: 5px; } .android .sentence { font-size: 17px; margin-top: -15px; } .backbg { position: relative; top: -3px; background-color: #ede7d9; padding: 15px; padding-bottom: 15px; padding-left: 30px; padding-right: 30px; border-radius: 0px 0px 10px 10px; color: #313628; font-size: 22px; text-align: center; } .android .backbg { position: relative; top: -5px; background-color: #123; padding: 15px; padding-bottom: 15px; padding-left: 15px; padding-right: 15px; border-radius: 0px 0px 10px 10px; color: #fff; font-size: 20px; text-align: left; } .hira { font-size: 25px; line-height: 5px; padding-bottom: 40px; } .android .hira { font-size: 18px; line-height: 5px; padding-bottom: 25px; } hr { height: 2px; font-size: 10px; border: 0; background: #d5a021; } u { text-decoration: none; border-bottom: 1px dotted; } '
-)
-
-
-my_model = genanki.Model(
-  1607392320,
-  'Messier Model',
-  fields=[
-    {'name': 'mid'},
-    {'name': 'cons'},
-    {'name': 'type'},
-    {'name': 'discoveredby'},
-    {'name': 'description'},
-    {'name': 'consimage'},
-    {'name': 'objectimage'}
-  ],
-  templates=[
+      'qfmt': '{{#name}}<div class=frontbg>What is the common name of M{{mid}}?</div>{{/name}}',
+      'afmt': '{{FrontSide}}<div class=backbg><hr id="answer">{{name}}<br>{{objectimage}}</div>',
+    },
     {
       'name': 'Constellation',
-      'qfmt': '<div class=frontbg>What constellation is M{{mid}} in?</div>',
+      'qfmt': '<div class=frontbg>Which constellation is M{{mid}} in?</div>',
       'afmt': '{{FrontSide}}<div class=backbg><hr id="answer">{{cons}}<br>{{consimage}}<br>{{discoveredby}}</div>', # Constellation with image of constellation on back
     },
     {  
       'name': 'Type',
-      'qfmt': '<div class=frontbg>What is the type of M{{mid}}?</div>',
-      'afmt': '{{FrontSide}}<div class=backbg><hr id="answer"><u>{{type}}</u><br><br>{{objectimage}}<br>{{description}}</div>', 
+      'qfmt': '<div class=frontbg>What type of deep sky object is M{{mid}}?</div>',
+      'afmt': '{{FrontSide}}<div class=backbg><hr id="answer"><u>{{type}}</u><br><br>{{objectimage}}<br>{{description}}</div>',  
     }
   ],
   css='ruby rt { visibility: hidden; } ruby:hover rt { visibility: visible; } .card { font-family: Noto Sans CJK JP Regular; font-size: 25px; text-align: center; color: black; background: url("bg.jpg"); } .android .card { font-family: Noto Sans CJK JP Regular; font-size: 30px; text-align: center; color: black; background: url("bg.jpg"); } .frontbg { background-color: #313628; color: #ede7d9; border-radius: 7px; position: relative; left: 0; } .engdefbg { font-family: Raleway; font-style: italic; padding: 15px; margin-left: -5px; margin-top: -15px; color: #18adab; font-size: 15px; } .android .engdefbg { font-family: Raleway; font-style: italic; padding: 15px; margin-left: -15px; margin-top: -20px; color: #18adab; font-size: 10px; } .others { position: relative; top: 15px; border: 1px dotted #72c8e1; color: #18a111; font-size: 20x; width: auto; padding-top: 15px; padding-left: 20px; padding-bottom: 15px; padding-right: 20px; margin-bottom: 35px; } .android .others { position: relative; top: 10px; border: 1px dotted #72c111; color: #18ad34; font-size: 17px; width: auto; padding-top: 8px; padding-left: 15px; padding-bottom: 8px; padding-right: 15px; margin-bottom: 20px; } .sentence { font-size: 25px; margin-top: -20px; margin-bottom: 5px; } .android .sentence { font-size: 17px; margin-top: -15px; } .backbg { position: relative; top: -3px; background-color: #ede7d9; padding: 15px; padding-bottom: 15px; padding-left: 30px; padding-right: 30px; border-radius: 0px 0px 10px 10px; color: #313628; font-size: 22px; text-align: center; } .android .backbg { position: relative; top: -5px; background-color: #123; padding: 15px; padding-bottom: 15px; padding-left: 15px; padding-right: 15px; border-radius: 0px 0px 10px 10px; color: #fff; font-size: 20px; text-align: left; } .hira { font-size: 25px; line-height: 5px; padding-bottom: 40px; } .android .hira { font-size: 18px; line-height: 5px; padding-bottom: 25px; } hr { height: 2px; font-size: 10px; border: 0; background: #d5a021; } u { text-decoration: none; border-bottom: 1px dotted; } '
 )
+
 
 
 
@@ -169,12 +138,7 @@ my_deck = genanki.Deck(2059400111, 'Messier Objects')
 for M in messier_catalog:
     print(M)
 
-    if 'name' in M.keys():
-
-      note = genanki.Note(model=my_model_name, fields=[M['mid'], M['cons'], M['type'],M['name'], M['discoveredby'], M['description'], M['consimage'], M['objectimage']])
-    else:
-      note = genanki.Note(model=my_model, fields=[M['mid'], M['cons'], M['type'], M['discoveredby'], M['description'], M['consimage'], M['objectimage']])
-
+    note = genanki.Note(model=messier_model, fields=[M['mid'], M['cons'], M['type'],M['name'], M['discoveredby'], M['description'], M['consimage'], M['objectimage']])
     my_deck.add_note(note)
 
 my_package = genanki.Package(my_deck)

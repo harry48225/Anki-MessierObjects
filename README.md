@@ -20,8 +20,9 @@ What is the name of the object?
 
 ## Requirements
 * genanki
-* BeautifulSoup4
+* BeautifulSoup4 (and a parser such as html5lib)
 * requests
+* regex
 
 
 Note IAU constellation images distributed under Attribution 3.0 Unported (CC BY 3.0) from https://www.iau.org/public/themes/constellations/
