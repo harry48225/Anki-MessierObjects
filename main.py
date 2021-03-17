@@ -2,7 +2,6 @@ import genanki
 from bs4 import BeautifulSoup as bs
 import requests
 import urllib
-import tidy
 import regex as re
 
 target_Uri = 'http://www.messier.seds.org/m/m{0}.html' # $ 3 digits with padding
